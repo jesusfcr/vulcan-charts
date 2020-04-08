@@ -48,6 +48,13 @@ db:
 # extraEnv:
 #   FOO: BAR
 
+checks:
+  apiUrl: https://docker.example.com/docker/docker-local/v2
+  apiExtUrl: https://docker.example.com/docker/docker-local
+  usr: usr@example.com
+  pwd: pwd
+  registry: https://docker.example.com
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: false

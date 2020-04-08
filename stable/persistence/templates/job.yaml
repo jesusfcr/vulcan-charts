@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    name: {{ include "persistence.fullname" . }}-job
+  name: {{ include "persistence.fullname" . }}-job
+type: Opaque
+data:
+  DOCKER_REGISTRY_USER: {{ .Values.checks.usr | b64enc | quote}}
+  DOCKER_REGISTRY_PWD: {{ .Values.checks.pwd | b64enc | quote}}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "persistence.fullname" . }}-job
+  labels:
+{{ include "persistence.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: wait-for-persistence
+        image: busybox:latest
+        command: ['sh', '-c', 'until nc -vz $SVC 80; do echo "Waiting for persistence service"; sleep 2; done;']
+        env:
+        - name: SVC
+          value: "{{ include "persistence.fullname" . }}"
+      containers:
+      - name: post-install-job
+        image: adevinta/vulcan-build-images
+        env:
+        - name: DOCKER_API_URL
+          value: "{{ .Values.checks.apiUrl }}"
+        - name: DOCKER_API_EXETENDED_URL
+          value: "{{ .Values.checks.apiExtUrl }}"
+        - name: DOCKER_REGISTRY
+          value: "{{ .Values.checks.registry }}"
+        - name: PERSISTENCE_URL
+          value: "http://{{ include "persistence.fullname" . }}"
+        envFrom:
+        - secretRef:
+            name: {{ include "persistence.fullname" . }}-job
