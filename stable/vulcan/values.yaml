@@ -225,6 +225,8 @@ reportsgenerator:
     name: reportsgenerator
 
 metrics:
+  proxy:
+    enabled: false
   conf:
     checksQueueArn: arn:aws:sqs:local:012345678900:VulcanK8SMetricsChecks
     checksQueueName: VulcanK8SMetricsChecks

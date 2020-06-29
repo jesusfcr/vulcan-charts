@@ -31,7 +31,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        {{- include "dogstatsd-sidecar" . | nindent 8 }}
+        {{- include "common-containers" . | nindent 8 }}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -60,15 +60,11 @@ spec:
             value: "{{ .Values.conf.dogstatsdAddr | default "localhost:8125" }}"
           - name: REDIS_ADDR
             value: "{{ .Values.conf.redisAddr | default (include "metricsRedisAddr" .)}}"
-        {{- if .Values.global.sqs.enabled }}
           - name: CHECKS_SQS_QUEUE_NAME
             value: "{{ .Values.conf.checksQueueName }}"
           - name: SCANS_SQS_QUEUE_NAME
             value: "{{ .Values.conf.scansQueueName }}"
-        {{- end }}
-        {{- include "infra-envs-minio" . | nindent 10 }}   # Just for credentials
-        {{- include "infra-envs-sqs" . | nindent 10 }}
-        {{- include "dogstatsd-envs" . | nindent 10 }}
+        {{- include "common-envs" . | nindent 10 }}
         {{- range $name, $value := .Values.extraEnv }}
           - name: {{ $name }}
             value: {{ $value | quote }}

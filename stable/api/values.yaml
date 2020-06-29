@@ -22,7 +22,7 @@ fullnameOverride: ""
 containerPort: 8080
 
 livenessProbe:
-  enabled: true
+  enabled : true
   path: /api/v1/healthcheck
   initialDelaySeconds: 10
   timeoutSeconds: 3
@@ -38,6 +38,9 @@ readinessProbe:
   periodSeconds: 10
   successThreshold: 1
   failureThreshold: 5
+
+global:
+  domain:
 
 proxy:
   enabled: false
@@ -63,6 +66,11 @@ conf:
     snsArn: arn:aws:sns:TBD:TBD:TBD
     redirectUrl:
   vulnerabilityDbUrl: vulnerabilitydbapi # the current FIAAS
+  persistenceHost:
+  crontinuousUrl:
+  reportsgeneratorUrl:
+  scanengineUrl:
+  apiHostname:
 
 db:
   host:

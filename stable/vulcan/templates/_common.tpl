@@ -1,3 +1,11 @@
+{{- define "common-mainifests" -}}
+{{- include "proxy-config-map" . }}
+{{- end -}}
+
+{{- define "common-annotations" -}}
+{{- include "proxy-annotations" . }}
+{{- end -}}
+
 {{/*
 Lifecycle common preStop
 */}}
@@ -50,4 +58,20 @@ readinessProbe:
 {{- if .Values.terminationGracePeriodSeconds -}}
 terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
 {{- end -}}
+{{- end -}}
+
+{{- define "common-containers" -}}
+{{- include "dogstatsd-sidecar" . }}
+{{- include "proxy-container" . }}
+{{- end -}}
+
+{{- define "common-envs" -}}
+{{- include "infra-envs-sqs" . }}
+{{- include "infra-envs-sns" . }}
+{{- include "infra-envs-minio" . }}
+{{- include "dogstatsd-envs" . }}
+{{- end -}}
+
+{{- define "common-volumes" -}}
+{{- include "proxy-volumes" . }}
 {{- end -}}

@@ -1,0 +1,24 @@
+{{- define "common-manifests" -}}
+{{- end -}}
+
+{{- define "common-annotations" -}}
+{{- end -}}
+
+{{- define "common-lifecycle" -}}
+{{- end -}}
+
+{{- define "common-spec" -}}
+{{- end -}}
+
+{{- define "common-containers" -}}
+{{- end -}}
+
+{{- define "common-envs" -}}
+{{- end -}}
+
+{{- define "common-volumes" -}}
+{{- end -}}
+
+{{- define "postgresqlHost" -}}
+{{ .Values.db.host }}
+{{- end -}}

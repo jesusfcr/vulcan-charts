@@ -40,6 +40,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+global:
+  region:
+
 proxy:
   enabled: false
 
@@ -49,12 +52,13 @@ dogstatsd:
 conf:
   logLevel: "info"
   queueArn: arn:aws:sqs:TBD:TBD:TBD
+  queueName: TBD
   persistenceEndpoint:
   resultsEndpoint:
   ses:
     region:
     from: tbd@tbd.com
-    cc: '["tbd@tbd.com"]'
+    cc: '[\"tbd@tbd.com\"]'
   generators:
     scan:
       emailSubject: "Security Overview"

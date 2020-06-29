@@ -9,6 +9,9 @@ image:
   tag: latest
   pullPolicy: Always
 
+global:
+  region:
+
 proxy:
   enabled: false
 
@@ -51,6 +54,7 @@ conf:    # TBD
   vulcanToken: TBDTBDTBD
   crontinuousBucket: tbd
   vulcanUser: tbd
+  vulcanApi:
 
 # extraEnv:
 #   FOO: BAR

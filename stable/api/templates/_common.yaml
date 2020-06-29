@@ -1,0 +1,44 @@
+{{- define "common-manifests" -}}
+{{- end -}}
+
+{{- define "common-annotations" -}}
+{{- end -}}
+
+{{- define "common-lifecycle" -}}
+{{- end -}}
+
+{{- define "common-spec" -}}
+{{- end -}}
+
+{{- define "common-containers" -}}
+{{- end -}}
+
+{{- define "common-envs" -}}
+{{- end -}}
+
+{{- define "common-volumes" -}}
+{{- end -}}
+
+{{- define "persistenceHost" -}}
+{{- .Values.conf.persistenceHost -}}
+{{- end -}}
+
+{{- define "crontinuousUrl" -}}
+{{- .Values.conf.reportsgeneratorUrl -}}
+{{- end -}}
+
+{{- define "reportsgeneratorUrl" -}}
+{{- .Values.conf.reportsgeneratorUrl -}}
+{{- end -}}
+
+{{- define "scanengineUrl" -}}
+{{- .Values.conf.scanengineUrl -}}
+{{- end -}}
+
+{{- define "api.hostname" -}}
+{{ .Values.conf.apiHostname }}
+{{- end -}}
+
+{{- define "postgresqlHost" -}}
+{{- .Values.db.host -}}
+{{- end -}}

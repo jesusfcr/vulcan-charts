@@ -32,7 +32,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-      {{- include "proxy-container" . | nindent 8 }}
+      {{- include "common-containers" . | nindent 8 }}
       {{- $dot := . }}
       {{- range $i, $p := .Values.conf.proxies }}
         {{- $port := add $dot.Values.containerPort $i }}

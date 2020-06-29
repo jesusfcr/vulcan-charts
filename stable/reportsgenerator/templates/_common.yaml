@@ -1,0 +1,40 @@
+{{/*
+Define names that can be overriden in a parent chart
+*/}}
+{{- define "common-manifests" -}}
+{{- end -}}
+
+{{- define "common-annotations" -}}
+{{- end -}}
+
+{{- define "common-lifecycle" -}}
+{{- end -}}
+
+{{- define "common-spec" -}}
+{{- end -}}
+
+{{- define "common-containers" -}}
+{{- end -}}
+
+{{- define "common-envs" -}}
+{{- end -}}
+
+{{- define "common-volumes" -}}
+{{- end -}}
+
+{{- define "persistenceEndpoint" -}}
+{{- end -}}
+
+{{- define "postgresqlHost" -}}
+{{- .Values.db.host -}}
+{{- end -}}
+
+{{- define "resultsEndpoint" -}}
+{{- .Values.conf.resultsEndpoint -}}
+{{- end -}}
+
+{{- define "insights.hostname" -}}
+{{- end -}}
+
+{{- define "ui.hostname" -}}
+{{- end -}}

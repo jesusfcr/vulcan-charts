@@ -1,4 +1,4 @@
-{{- include "proxy-config-map" . }}
+{{- include "common-manifests" . }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/name: {{ include "results.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
-        {{- include "proxy-annotations" . | nindent 8 }}
+        {{- include "common-annotations" . | nindent 8 }}
         {{- with .Values.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -34,8 +34,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        {{- include "dogstatsd-sidecar" . | nindent 8 }}
-        {{- include "proxy-container" . | nindent 8}}
+        {{- include "common-containers" . | nindent 8}}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -54,8 +53,7 @@ spec:
             value: "{{ .Values.conf.bucketLogs }}"
           - name: LINK_BASE
             value: "{{ ternary "https" "http" .Values.ingress.tls }}://{{ include "results.hostname" . }}/v1"
-        {{- include "infra-envs-minio" . | nindent 10 }}
-        {{- include "dogstatsd-envs" . | nindent 10 }}
+        {{- include "common-envs" . | nindent 10 }}
         {{- range $name, $value := .Values.extraEnv }}
           - name: {{ $name }}
             value: {{ $value | quote }}
@@ -68,7 +66,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-      {{- include "proxy-volumes" . | nindent 6}}
+      {{- include "common-volumes" . | nindent 6}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
