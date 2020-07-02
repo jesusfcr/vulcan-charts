@@ -12,8 +12,6 @@ metadata:
   labels:
 {{ include "api.labels" . | indent 4 }}
   annotations:
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "https://{{ include "ui.hostname" . }}"
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
 {{- if .Values.defaultBackend.enabled }}
     nginx.ingress.kubernetes.io/custom-http-errors: {{ .Values.defaultBackend.httpCodes | default "403" | quote }}
