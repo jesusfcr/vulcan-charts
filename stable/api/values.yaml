@@ -22,7 +22,7 @@ fullnameOverride: ""
 containerPort: 8080
 
 livenessProbe:
-  enabled : true
+  enabled: true
   path: /api/v1/healthcheck
   initialDelaySeconds: 10
   timeoutSeconds: 3

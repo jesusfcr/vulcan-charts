@@ -54,7 +54,7 @@ conf:    # TBD
   vulcanToken: TBDTBDTBD
   crontinuousBucket: tbd
   vulcanUser: tbd
-  vulcanApi:
+  vulcanApi:  # http://host/api
 
 # extraEnv:
 #   FOO: BAR

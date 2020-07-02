@@ -24,7 +24,7 @@
 {{- end -}}
 
 {{- define "crontinuousUrl" -}}
-{{- .Values.conf.reportsgeneratorUrl -}}
+{{- .Values.conf.crontinuousUrl -}}
 {{- end -}}
 
 {{- define "reportsgeneratorUrl" -}}
