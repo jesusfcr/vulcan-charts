@@ -67,7 +67,7 @@ data:
 {{- end -}}
 
 {{- define "proxy-container" -}}
-{{- if .Values.proxy.enabled -}}
+{{- if .Values.proxy.enabled }}
 - name: proxy
   image: {{ .Values.proxy.image | default "haproxy:2.1-alpine" }}
   imagePullPolicy: Always
