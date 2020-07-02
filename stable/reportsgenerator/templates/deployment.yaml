@@ -82,8 +82,6 @@ spec:
             value: "{{ .Values.conf.generators.scan.privateBucket }}"
           - name: SCAN_GA_ID
             value: "{{ .Values.conf.generators.scan.gaId }}"
-          - name: SCAN_S3_PUBLIC_BUCKET
-            value: "{{ .Values.conf.generators.scan.publicBucket }}"
           - name: PERSISTENCE_ENDPOINT
             value: "{{ .Values.conf.persistenceEndpoint | default (include "persistenceEndpoint" .)}}"
           - name: RESULTS_ENDPOINT
