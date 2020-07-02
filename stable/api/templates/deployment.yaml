@@ -41,7 +41,7 @@ spec:
           command: ['sh', '-c', 'until pg_isready -t 5; do echo WaitingDB; done;']
           env:
           - name: PGHOST
-            value: "{{ include "postgresqlHost" . }}"
+            value: "{{ .Values.db.host | default (include "postgresqlHost" .) }}"
           - name: PGPORT
             value: "{{ .Values.db.port }}"
       containers:
@@ -55,9 +55,9 @@ spec:
           - name: PORT
             value: "{{ .Values.containerPort }}"
           - name: COOKIE_DOMAIN
-            value: "{{ default .Values.global.domain .Values.conf.cookieDomain }}"
+            value: "{{ .Values.conf.cookieDomain | default .Values.global.domain }}"
           - name: PG_HOST
-            value: "{{ include "postgresqlHost" . }}"
+            value: "{{ .Values.db.host | default (include "postgresqlHost" .) }}"
           - name: PG_NAME
             value: "{{ .Values.db.name }}"
           - name: PG_USER

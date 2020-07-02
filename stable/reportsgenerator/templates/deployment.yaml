@@ -37,7 +37,7 @@ spec:
           command: ['sh', '-c', 'until pg_isready -t 5; do echo WaitingDB; done;']
           env:
           - name: PGHOST
-            value: "{{ include "postgresqlHost" . }}"
+            value: "{{ .Values.db.host | default (include "postgresqlHost" .) }}"
           - name: PGPORT
             value: "{{ .Values.db.port }}"
       containers:
@@ -51,7 +51,7 @@ spec:
           - name: PORT
             value: "{{ .Values.containerPort }}"
           - name: PG_HOST
-            value: "{{ include "postgresqlHost" . }}"
+            value: "{{ .Values.db.host | default (include "postgresqlHost" .) }}"
           - name: PG_NAME
             value: "{{ .Values.db.name }}"
           - name: PG_USER

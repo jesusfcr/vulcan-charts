@@ -47,7 +47,7 @@ spec:
           - name: CRONTINUOUS_BUCKET
             value: {{ .Values.conf.crontinuousBucket }}
           - name: VULCAN_API
-            value: {{ include "vulcanApi" . }}
+            value: {{ .Values.conf.vulcanApi | default (include "vulcanApi" .) }}
           - name: VULCAN_USER
             value: {{ .Values.conf.vulcanUser }}
         {{- include "common-envs" . | nindent 10 }}

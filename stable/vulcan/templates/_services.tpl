@@ -58,45 +58,45 @@ Override names
 {{- end -}}
 
 {{- define "api.hostname" -}}
-{{ printf "%s.%s" "www" .Values.global.domain }}
+{{- printf "%s.%s" "www" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "goaws.hostname" -}}
-{{ printf "%s.%s" "goaws" .Values.global.domain }}
+{{- printf "%s.%s" "goaws" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "crontinuous.hostname" -}}
-{{ printf "%s.%s" "crontinuous" .Values.global.domain}}
+{{- printf "%s.%s" "crontinuous" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "insights.hostname" -}}
-{{ printf "%s.%s" "insights" .Values.global.domain }}
+{{- printf "%s.%s" "insights" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "persistence.hostname" -}}
-{{ printf "%s.%s" "persistence" .Values.global.domain }}
+{{- printf "%s.%s" "persistence" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "results.hostname" -}}
-{{ printf "%s.%s" "results" .Values.global.domain }}
+{{- printf "%s.%s" "results" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "scanengine.hostname" -}}
-{{ printf "%s.%s" "scanengine" .Values.global.domain }}
+{{- printf "%s.%s" "scanengine" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "reportsgenerator.hostname" -}}
-{{ printf "%s.%s" "reportsgenerator" .Values.global.domain }}
+{{- printf "%s.%s" "reportsgenerator" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "stream.hostname" -}}
-{{ printf "%s.%s" "stream" .Values.global.domain }}
+{{- printf "%s.%s" "stream" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "ui.hostname" -}}
-{{ printf "%s.%s" "www" .Values.global.domain }}
+{{- printf "%s.%s" "www" .Values.global.domain -}}
 {{- end -}}
 
 {{- define "postgresqlHost" -}}
-{{  .Values.db.host | default (printf "%s-postgresql" .Release.Name ) }}
+{{- printf "%s-postgresql" .Release.Name -}}
 {{- end -}}
