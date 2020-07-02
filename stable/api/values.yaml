@@ -41,6 +41,8 @@ readinessProbe:
 
 global:
   domain:
+  infra:
+    sqs:
 
 proxy:
   enabled: false

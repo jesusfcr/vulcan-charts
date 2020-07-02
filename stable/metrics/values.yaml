@@ -23,6 +23,10 @@ fullnameOverride: ""
 dogstatsd:
   enabled: true
 
+global:
+  infra:
+    sqs:
+
 conf:
   region:
   logLevel: warn

@@ -40,6 +40,10 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+global:
+  infra:
+    sqs:
+
 proxy:
   enabled: false
 
