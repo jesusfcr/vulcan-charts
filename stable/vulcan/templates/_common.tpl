@@ -1,4 +1,4 @@
-{{- define "common-mainifests" -}}
+{{- define "common-manifests" -}}
 {{- include "proxy-config-map" . }}
 {{- end -}}
 
