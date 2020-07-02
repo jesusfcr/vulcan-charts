@@ -12,6 +12,9 @@ image:
 global:
   region:
 
+infra:
+  s3: true
+
 proxy:
   enabled: false
 

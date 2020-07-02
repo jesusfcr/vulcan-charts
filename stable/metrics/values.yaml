@@ -28,6 +28,9 @@ global:
   infra:
     sqs:
 
+infra:
+  sqs: true
+
 conf:
   region:
   logLevel: warn

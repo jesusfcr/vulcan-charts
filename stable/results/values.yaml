@@ -48,6 +48,9 @@ proxy:
 dogstatsd:
   enabled: false
 
+infra:
+  s3: true
+
 conf:
   debug: "false"
   region:

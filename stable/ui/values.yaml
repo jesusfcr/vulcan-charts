@@ -46,6 +46,9 @@ proxy:
 dogstatsd:
   enabled: false
 
+infra:
+  sqs: false
+
 conf:
   apiUrl: # https://vulcan-api/api/v1/
 

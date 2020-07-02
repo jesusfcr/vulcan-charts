@@ -47,6 +47,10 @@ global:
 proxy:
   enabled: false
 
+infra:
+  sqs: true
+  sns: true
+
 dogstatsd:
   enabled: false
 

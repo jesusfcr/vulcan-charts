@@ -48,6 +48,10 @@ proxy:
 dogstatsd:
   enabled: false
 
+infra:
+  s3: true
+  sns: true
+
 conf:
   snsTopic: "arn:aws:sns:local:TBD:TBD"
   s3Scans: TBD
