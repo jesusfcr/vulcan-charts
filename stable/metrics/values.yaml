@@ -24,6 +24,7 @@ dogstatsd:
   enabled: true
 
 global:
+  region:
   infra:
     sqs:
 

@@ -66,10 +66,10 @@ terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
 {{- end -}}
 
 {{- define "common-envs" -}}
-{{- include "infra-envs-sqs" . }}
-{{- include "infra-envs-sns" . }}
-{{- include "infra-envs-minio" . }}
-{{- include "dogstatsd-envs" . }}
+{{ include "infra-envs-sqs" . }}
+{{ include "infra-envs-sns" . }}
+{{ include "infra-envs-minio" . }}
+{{ include "dogstatsd-envs" . }}
 {{- end -}}
 
 {{- define "common-volumes" -}}
