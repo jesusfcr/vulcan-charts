@@ -41,8 +41,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 global:
-  infra:
-    sqs:
+  sqs:
+    enabled:
 
 proxy:
   enabled: false
