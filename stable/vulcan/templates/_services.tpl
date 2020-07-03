@@ -41,10 +41,6 @@ Override names
 {{- printf "%s-metrics-redis:6379" .Release.Name -}}
 {{- end -}}
 
-{{- define "metricsDogstatsdAddr" -}}
-{{- printf "%s-metrics-dogstatsd:8125" .Release.Name -}}
-{{- end -}}
-
 {{- define "minioEndpoint" -}}
 {{- printf "http://%s-minio" .Release.Name -}}
 {{- end -}}

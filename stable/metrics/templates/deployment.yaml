@@ -56,8 +56,6 @@ spec:
             value: "{{ .Values.conf.ledgerSource }}"
           - name: LEDGER_TENANT
             value: "{{ .Values.conf.ledgerTenant }}"
-          - name: DOGSTATSD_ADDR
-            value: "{{ .Values.conf.dogstatsdAddr | default "localhost:8125" }}"
           - name: REDIS_ADDR
             value: "{{ .Values.conf.redisAddr | default (include "metricsRedisAddr" .)}}"
           {{- if .Values.global.sqs.enabled }}
