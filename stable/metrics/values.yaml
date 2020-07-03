@@ -43,6 +43,8 @@ conf:
   ledgerSource: tbd
   ledgerTenant: tbd
   redisPassword: TBD
+  redisAddr:
+  resultsHost:
 
 # extraEnv:
 #   FOO: BAR

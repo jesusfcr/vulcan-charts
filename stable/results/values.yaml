@@ -57,7 +57,6 @@ conf:
   bucketReports: TBD
   bucketLogs: TBD
   resultsHost:
-  metricsRedisAddr:
 
 # extraEnv:
 #   FOO: BAR
