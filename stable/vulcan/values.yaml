@@ -200,13 +200,18 @@ insights:
   lifecycle:
     preStopSleep: 30
   conf:
-    proxies:
-      - name: private
-        s3Bucket: insights
-        prefix: ""
-      - name: public
-        s3Bucket: public-insights
-        prefix: "/public"
+    s3Bucket: insights
+    prefix:
+
+insightspublic:
+  <<: *proxy
+  lifecycle:
+    preStopSleep: 30
+  conf:
+    s3Bucket: public-insights
+    prefix: /public
+  ingress:
+    path: /public
 
 reportsgenerator:
   <<: *proxy

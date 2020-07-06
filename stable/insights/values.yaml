@@ -48,6 +48,7 @@ serviceAccount:
   name:
 
 proxy:
+  enabled: true
   cache: true
   port: 80
   probePath: /healthz
@@ -61,13 +62,8 @@ dogstatsd:
 conf:
   region:
   log: "false"
-  proxies:
-    - name: private
-      s3Bucket: tbd
-      prefix: ""
-    - name: public
-      s3Bucket: tbd
-      prefix: "/public"
+  s3Bucket: tbd
+  prefix:
 
 podSecurityContext: {}
   # fsGroup: 2000

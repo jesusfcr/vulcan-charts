@@ -1,3 +1,5 @@
+{{- include "common-manifests" . }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,9 +18,7 @@ spec:
       labels:
         {{- include "insights.selectorLabels" . | nindent 8 }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-proxy.yaml") . | sha256sum }}
-        prometheus.io/scrape: 'true'
-        prometheus.io/port: '{{ .Values.proxy.metricsPort }}'
+        {{- include "common-annotations" . | nindent 8 }}
         {{- with .Values.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -33,84 +33,33 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
       {{- include "common-containers" . | nindent 8 }}
-      {{- $dot := . }}
-      {{- range $i, $p := .Values.conf.proxies }}
-        {{- $port := add $dot.Values.containerPort $i }}
-        - name: "app-{{ $p.name }}"
+        - name: "app"
           securityContext:
-            {{- toYaml $dot.Values.securityContext | nindent 12 }}
-          image: "{{ $dot.Values.image.repository }}:{{ $dot.Values.image.tag }}"
-          imagePullPolicy: {{ $dot.Values.image.pullPolicy }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: AWS_REGION
-              value: "{{ $dot.Values.conf.region | default $dot.Values.global.region }}"
+              value: "{{ .Values.conf.region | default .Values.global.region }}"
             - name: ACCESS_LOG
-              value: "{{ $dot.Values.conf.log }}"
+              value: "{{ .Values.conf.log }}"
             - name: AWS_S3_BUCKET
-              value: "{{ $p.s3Bucket }}"
+              value: "{{ .Values.conf.s3Bucket }}"
             - name: STRIP_PATH
-              value: "{{ $p.prefix }}"
+              value: "{{ .Values.conf.prefix }}"
             - name: HEALTHCHECK_PATH
               value: "/healthcheck"
             - name: APP_PORT
-              value: "{{ $port }}"
-            {{- if $dot.Values.global.minio.enabled }}
-            - name: AWS_API_ENDPOINT
-              value: "{{ include "minioEndpoint" $dot }}"
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: "{{ printf "%s-minio" $dot.Release.Name  }}"
-                  key: access-key
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: "{{ printf "%s-minio" $dot.Release.Name  }}"
-                  key: secret-key
-            {{- end }}
+              value: "{{ .Values.containerPort }}"
+        {{- include "common-envs" . | nindent 10 -}}
           ports:
-            - name: {{ $p.name }}
-              containerPort: {{ $port }}
+            - name: {{ ternary "app" "http" .Values.proxy.enabled }}
+              containerPort: {{ .Values.containerPort }}
               protocol: TCP
-          {{- if or $dot.Values.lifecycle.preStopCommand $dot.Values.lifecycle.preStopSleep }}
-          lifecycle:
-            preStop:
-              exec:
-          {{- if $dot.Values.lifecycle.preStopCommand }}
-                command: {{ $dot.Values.lifecycle.preStopCommand }}
-          {{- else }}
-                command: ["/bin/sh","-c","sleep {{ $dot.Values.lifecycle.preStopSleep }};"]
-          {{- end -}}
-          {{- end -}}
-          {{- if $dot.Values.readinessProbe.enabled }}
-          livenessProbe:
-            httpGet:
-              path: {{ $dot.Values.livenessProbe.path }}
-              port: {{ $port }}
-            initialDelaySeconds: {{ $dot.Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ $dot.Values.livenessProbe.periodSeconds }}
-            timeoutSeconds: {{ $dot.Values.livenessProbe.timeoutSeconds }}
-            successThreshold: {{ $dot.Values.livenessProbe.successThreshold }}
-            failureThreshold: {{ $dot.Values.livenessProbe.failureThreshold }}
-          {{- end }}
-          {{- if $dot.Values.readinessProbe.enabled }}
-          readinessProbe:
-            httpGet:
-              path: {{ $dot.Values.readinessProbe.path }}
-              port: {{ $port }}
-            initialDelaySeconds: {{ $dot.Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ $dot.Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ $dot.Values.readinessProbe.timeoutSeconds }}
-            successThreshold: {{ $dot.Values.readinessProbe.successThreshold }}
-            failureThreshold: {{ $dot.Values.readinessProbe.failureThreshold }}
-          {{- end }}
           resources:
-            {{- toYaml $dot.Values.resources | nindent 12 }}
-      {{- end }}
+            {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-      - name: config-proxy
-        configMap:
-          name: {{ .Release.Name }}-{{ .Chart.Name }}-proxy
+      {{- include "common-volumes" . | nindent 6}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

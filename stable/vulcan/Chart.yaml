@@ -51,6 +51,11 @@ dependencies:
   version: 0.2.0
   repository: "file://../insights"
   condition: insights.enabled
+- name: insights
+  version: 0.2.0
+  repository: "file://../insights"
+  alias: insightspublic
+  condition: insightspublic.enabled
 - name: ui
   version: 0.2.0
   repository: "file://../ui"
