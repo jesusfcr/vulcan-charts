@@ -45,7 +45,6 @@ goaws:
         Port: {{ .Values.containerPort }}
         AccountId: "012345678900"
         LogToFile: false
-        Region: local
         QueueAttributeDefaults:
           VisibilityTimeout: 30
           ReceiveMessageWaitTimeSeconds: 0
