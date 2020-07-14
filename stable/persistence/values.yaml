@@ -51,6 +51,7 @@ dogstatsd:
 infra:
   s3: true
   sns: true
+  sqs: true
 
 conf:
   snsTopic: "arn:aws:sns:local:TBD:TBD"
