@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ev
+
 eval $(ssh-agent)
 echo $ID_RSA | base64 -d | ssh-add
 
