@@ -1,3 +1,6 @@
+os: linux
+dist: bionic
+language: minimal
 git:
   depth: false
 before_script:
@@ -21,7 +24,6 @@ script:
 deploy:
   provider: script
   script: ./deploy.sh
-  skip_cleanup: true
   on:
     branch: fix-lint
 branches:
