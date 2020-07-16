@@ -58,12 +58,6 @@ spec:
             value: "{{ .Values.conf.ledgerTenant }}"
           - name: REDIS_ADDR
             value: "{{ .Values.conf.redisAddr | default (include "metricsRedisAddr" .)}}"
-          {{- if .Values.global.sqs.enabled }}
-          - name: CHECKS_SQS_QUEUE_NAME
-            value: "{{ .Values.conf.checksQueueName }}"
-          - name: SCANS_SQS_QUEUE_NAME
-            value: "{{ .Values.conf.scansQueueName }}"
-          {{- end }}
         {{- include "common-envs" . | nindent 10 }}
         {{- range $name, $value := .Values.extraEnv }}
           - name: {{ $name }}

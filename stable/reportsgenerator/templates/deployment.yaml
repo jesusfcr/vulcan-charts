@@ -96,10 +96,6 @@ spec:
           - name: SCAN_REDIRECT_URL
             value: "{{ .Values.conf.generators.scan.redirectUrl }}"
           {{- end }}
-          {{- if .Values.global.sqs.enabled }}
-          - name: SQS_QUEUE_NAME
-            value: "{{ .Values.conf.queueName }}"
-          {{- end }}
         {{- include "common-envs" . | nindent 10 }}
         {{- range $name, $value := .Values.extraEnv }}
           - name: {{ $name }}

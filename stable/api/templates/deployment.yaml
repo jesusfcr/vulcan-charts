@@ -96,10 +96,6 @@ spec:
             value: "{{ .Values.conf.persistenceHost | default  (include "persistenceHost" .) }}"
           - name: VULNERABILITYDB_URL
             value: "{{ .Values.conf.vulnerabilityDbUrl }}"
-          {{- if .Values.global.sqs.enabled }}
-          - name: SQS_QUEUE_NAME
-            value: "{{ .Values.conf.queueName }}"
-          {{- end }}
         {{- include "common-envs" . | nindent 10 -}}
         {{- range $name, $value := .Values.extraEnv }}
           - name: {{ $name }}

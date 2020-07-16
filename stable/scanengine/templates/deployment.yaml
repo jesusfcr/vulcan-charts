@@ -74,10 +74,6 @@ spec:
             value: "{{ .Values.conf.queueArn }}"
           - name: SNS_TOPIC_ARN
             value: "{{ .Values.conf.snsArn }}"
-          {{- if .Values.global.sqs.enabled }}
-          - name: SQS_QUEUE_NAME
-            value: "{{ .Values.conf.queueName }}"
-          {{- end }}
         {{- include "common-envs" . | nindent 10 }}
         {{- range $name, $value := .Values.extraEnv }}
           - name: {{ $name }}

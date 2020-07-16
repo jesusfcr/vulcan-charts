@@ -4,15 +4,11 @@
 {{- if and  .Values.infra.sns .Values.global.sns.enabled -}}
 - name: AWS_SNS_ENDPOINT
   value: "{{ include "snsEndpoint" . }}"
-- name: AWS_SNS_REGION
-  value: "{{ .Values.global.region }}"
 {{- $auth = 1 -}}
 {{- end -}}
 {{- if and .Values.infra.sqs .Values.global.sqs.enabled }}
 - name: AWS_SQS_ENDPOINT
   value: "{{ include "sqsEndpoint" . }}"
-- name: AWS_SQS_REGION
-  value: "{{ .Values.global.region }}"
 {{- $auth = 1 -}}
 {{- end -}}
 {{- if and .Values.infra.s3 .Values.global.minio.enabled }}
