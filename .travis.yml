@@ -23,6 +23,7 @@ script:
 - helm template ${STABLE}/vulcan -f ./test/values.yaml | $HOME/tools/kubeval --strict --ignore-missing-schemas
 deploy:
   provider: script
+  cleanup: false
   script: ./deploy.sh
   on:
     branch: fix-lint
