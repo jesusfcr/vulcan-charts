@@ -23,7 +23,7 @@ deploy:
   script: ./deploy.sh
   skip_cleanup: true
   on:
-    branch: build
+    branch: fix-lint
 branches:
   except:
   - gh-pages
