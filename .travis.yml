@@ -1,41 +1,29 @@
 git:
   depth: false
 before_script:
-  - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-  - |
-      mkdir -p $HOME/tools
-      curl -L https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz | tar xz -C $HOME/tools
+- curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+- |
+    mkdir -p $HOME/tools
+    curl -L https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz | tar xz -C $HOME/tools
 script:
-  - helm lint ./stable/*
-  - mkdir $HOME/stable
-  - |
-      STABLE="$(git rev-parse --show-toplevel)/stable"
-      cd ${STABLE}      
-      for d in */; do
-        echo "Validating chart ${d}"
-        helm dep update ${STABLE}/${d}
-      done
-      cd ..
-  - helm package ${STABLE}/* --destination $HOME/stable
-  - helm template ${STABLE}/vulcan -f ./test/values.yaml | $HOME/tools/kubeval --strict --ignore-missing-schemas
-  - eval $(ssh-agent)
-  - echo $ID_RSA | base64 -d | ssh-add -
-  - |
-      git stash -u
-      git config --global url.ssh://git@github.com/.insteadOf https://github.com/
-      git checkout gh-pages
-      mv -f $HOME/stable/*.tgz .
-      if [[ -z `git status -s` ]]; then
-        echo "tree is clean"
-      else
-        echo "Publish charts"
-        helm repo index . --url https://adevinta.github.io/vulcan-charts
-        git add .
-        git commit -m "$TRAVIS_COMMIT_MESSAGE"
-        git push origin gh-pages
-      fi      
+- helm lint ./stable/*
+- mkdir $HOME/stable
+- |
+    STABLE="$(git rev-parse --show-toplevel)/stable"
+    cd ${STABLE}
+    for d in */; do
+      echo "Validating chart ${d}"
+      helm dep update ${STABLE}/${d}
+    done
+    cd ..
+- helm package ${STABLE}/* --destination $HOME/stable
+- helm template ${STABLE}/vulcan -f ./test/values.yaml | $HOME/tools/kubeval --strict --ignore-missing-schemas
+deploy:
+  provider: script
+  script: ./deploy.sh
+  skip_cleanup: true
+  on:
+    branch: build
 branches:
-  only:
-  - master
   except:
   - gh-pages
