@@ -37,4 +37,4 @@ insights:
 
 reportsgenerator:
   ingress:
-    <<: *ingres
+    <<: *ingress
