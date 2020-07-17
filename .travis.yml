@@ -1,29 +1,25 @@
+os: linux
+dist: bionic
+language: minimal
 git:
   depth: false
 before_script:
 - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-- |
-    mkdir -p $HOME/tools
-    curl -L https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz | tar xz -C $HOME/tools
-script:
+- curl -L https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz | tar xz -C /usr/local/bin kubeval
+ript:
+- find ./stable -type d -maxdepth 1 -mindepth 1 -print -exec helm dep update {} \;
 - helm lint ./stable/*
-- mkdir $HOME/stable
+- helm template ./stable/vulcan -f ./test/values.yaml | kubeval --strict --ignore-missing-schemas
 - |
-    STABLE="$(git rev-parse --show-toplevel)/stable"
-    cd ${STABLE}
-    for d in */; do
-      echo "Validating chart ${d}"
-      helm dep update ${STABLE}/${d}
-    done
-    cd ..
-- helm package ${STABLE}/* --destination $HOME/stable
-- helm template ${STABLE}/vulcan -f ./test/values.yaml | $HOME/tools/kubeval --strict --ignore-missing-schemas
+  mkdir $HOME/pages
+  helm package ./stable/* --destination $HOME/pages
+  helm repo index $HOME/pages --url https://jesusfcr.github.io/vulcan-charts
 deploy:
-  provider: script
-  script: ./deploy.sh
+  provider: pages
   skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  local_dir: $HOME/pages
+  verbose: true
   on:
     branch: build
-branches:
-  except:
-  - gh-pages
