@@ -13,7 +13,7 @@ script:
 - |
   mkdir $HOME/pages
   helm package ./stable/* --destination $HOME/pages
-  helm repo index $HOME/pages --url https://jesusfcr.github.io/vulcan-charts
+  helm repo index $HOME/pages --url https://adevinta.github.io/vulcan-charts
 deploy:
   provider: pages
   skip_cleanup: true
@@ -22,4 +22,4 @@ deploy:
   local_dir: $HOME/pages
   verbose: true
   on:
-    branch: build
+    branch: master
