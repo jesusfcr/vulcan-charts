@@ -7,7 +7,7 @@ before_script:
 - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 - curl -sL https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz | sudo tar xz -C /usr/local/bin kubeval
 script:
-- find ./stable -type d -maxdepth 1 -mindepth 1 -print -exec helm dep update {} \;
+- find ./stable -maxdepth 1 -mindepth 1 -type d -print -exec helm dep update {} \;
 - helm lint ./stable/*
 - helm template ./stable/vulcan -f ./test/values.yaml | kubeval --strict --ignore-missing-schemas
 - |
