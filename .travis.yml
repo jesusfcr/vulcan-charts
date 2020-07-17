@@ -10,16 +10,12 @@ script:
 - find ./stable -maxdepth 1 -mindepth 1 -type d -print -exec helm dep update {} \;
 - helm lint ./stable/*
 - helm template ./stable/vulcan -f ./test/values.yaml | kubeval --strict --ignore-missing-schemas
-- |
-  mkdir $HOME/pages
-  helm package ./stable/* --destination $HOME/pages
-  helm repo index $HOME/pages --url https://adevinta.github.io/vulcan-charts
 deploy:
-  provider: pages
+  provider: script
+  script: ./deploy.sh
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  local_dir: $HOME/pages
-  verbose: true
   on:
-    branch: master
+    branch: build
+branches:
+  except:
+  - gh-pages
