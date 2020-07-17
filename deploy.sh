@@ -3,8 +3,9 @@
 eval $(ssh-agent -s)
 echo $ID_RSA | base64 -d | ssh-add -
 
-mkdir $HOME/pages
-helm package ./stable/* --destination $HOME/pages
+mkdir -p $HOME/package
+helm package ./stable/* --destination $HOME/package
+find $HOME/package
 
 git stash -u
 
@@ -12,7 +13,7 @@ git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 
 git checkout gh-pages
 
-mv -f $HOME/pages/*.tgz .
+mv -f $HOME/package/*.tgz .
 if [[ -z `git status -s` ]]; then
     echo "tree is clean"
 else
