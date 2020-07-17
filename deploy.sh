@@ -1,11 +1,11 @@
 #!/bin/bash
 
-eval $(ssh-agent -s)
-echo $ID_RSA | base64 -d | ssh-add -
-
+# Create the helm packages to publish
 mkdir -p $HOME/package
 helm package ./stable/* --destination $HOME/package
-find $HOME/package
+
+eval $(ssh-agent -s)
+echo $ID_RSA | base64 -d | ssh-add -
 
 git stash -u
 
